@@ -252,7 +252,6 @@ sub cmd_create_open {
     my @devices = Mgd::device_factory()->get_all;
     if ($size) {
         @devices = grep { ($_->mb_free * 1024*1024) > $size } @devices;
-        # TODO - what happens if no devices are left?
     }
 
     unless (MogileFS::run_global_hook('cmd_create_open_order_devices', [Mgd::device_factory()->get_all], \@devices)) {
