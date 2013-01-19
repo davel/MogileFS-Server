@@ -1,25 +1,16 @@
-Source: mogilefs-server
+Source: libmogilefs-server-perl
 Section: perl
 Priority: optional
-Maintainer: Jonathan Steinert <deb@hachi.kuiki.net>
-Build-Depends-Indep: debhelper (>= 4.1.40), perl (>= 5.6.0-16), libstring-crc32-perl
-Standards-Version: 3.6.1.0
+Build-Depends: debhelper (>= 5.0.0)
+Build-Depends-Indep: perl (>= 5.8.8-1), libgearman-client-perl (>= 1.07), gearman-server (>= 1.08), libsys-syscall-perl (>= 0.22), libnet-netmask-perl, libdanga-socket-perl (>= 1.56), libgearman-client-async-perl (>= 0.93), libperlbal-perl(>= 1.79), libperlbal-xs-httpheaders-perl, libnet-patricia-perl, libdbi-perl, libdbd-mysql-perl, libio-aio-perl, libmogilefs-client-perl, libio-stringy-perl
+Maintainer: Dave Lambley <davel@state51.co.uk>
+Standards-Version: 3.7.2
+Homepage: http://search.cpan.org/dist/MogileFS-Server/
 
-Package: mogstored
+Package: libmogilefs-server-perl
 Architecture: all
-Depends: ${perl:Depends}, libperlbal-perl (>= 1.79), libio-aio-perl, debconf (>= 1.2.0), sysstat
-Suggests: mogilefs-utils
-Description: storage node daemon for MogileFS
- Mogstored is a storage node daemon for MogileFS, the open-source
- application-level distributed filesystem from Danga Interactive.
-
-Package: mogilefsd
-Architecture: all
-Depends: ${perl:Depends}, libdbd-mysql-perl, libdbi-perl, debconf (>= 1.2.0), libnet-netmask-perl, libwww-perl, libdanga-socket-perl
-Suggests: mogilefs-utils
-Description: scalable distributed filesystem from Danga Interactive
- MogileFS is an open-source, application-level distributed filesystem. It
- creates a host-neutral, filesystem-agnostic method of distributing files
- that has many advantages over NFS and single-machine raid.  This set
- of utilities is very scalable and can handle Livejournal.com's load, for
- which it was designed.
+Depends: ${perl:Depends}, ${misc:Depends}, libgearman-client-perl (>= 1.07), gearman-server (>= 1.08), libsys-syscall-perl (>= 0.22), libnet-netmask-perl, libdanga-socket-perl (>= 1.56), libgearman-client-async-perl (>= 0.93), libperlbal-perl (>= 1.79), libperlbal-xs-httpheaders-perl, libnet-patricia-perl, libdbi-perl, libdbd-mysql-perl, libio-aio-perl, sysstat
+Description: MogileFS (distributed filesystem) server.
+ MogileFS (distributed filesystem) server.
+ .
+ This description was automagically extracted from the module by dh-make-perl.

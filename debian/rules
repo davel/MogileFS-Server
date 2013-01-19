@@ -1,73 +1,81 @@
 #!/usr/bin/make -f
-# Sample debian/rules that uses debhelper.
-# GNU copyright 1997 to 1999 by Joey Hess.
+# This debian/rules file is provided as a template for normal perl
+# packages. It was created by Marc Brockschmidt <marc@dch-faq.de> for
+# the Debian Perl Group (http://pkg-perl.alioth.debian.org/) but may
+# be used freely wherever it is useful.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# This is the debhelper compatibility version to use.
-# export DH_COMPAT=4
+# If set to a true value then MakeMaker's prompt function will
+# always return the default without waiting for user input.
 export PERL_MM_USE_DEFAULT=1
+
+PACKAGE=$(shell dh_listpackages)
 
 ifndef PERL
 PERL = /usr/bin/perl
 endif
 
-TMP	=$(CURDIR)/debian/tmp
+TMP     =$(CURDIR)/debian/$(PACKAGE)
 
-build:	build-stamp
+build: build-stamp
 build-stamp:
 	dh_testdir
-	$(PERL) Makefile.PL verbose INSTALLDIRS=vendor
-	$(MAKE)
 
-	touch build-stamp
+	# As this is a architecture independent package, we are not
+	# supposed to install stuff to /usr/lib. MakeMaker creates
+	# the dirs, we prevent this by setting the INSTALLVENDORARCH
+	# and VENDORARCHEXP environment variables.
+
+	# Add commands to compile the package here
+	$(PERL) Makefile.PL INSTALLDIRS=vendor \
+		INSTALLVENDORARCH=/usr/share/perl5/ \
+		VENDORARCHEXP=/usr/share/perl5/
+	$(MAKE)
+	$(MAKE) test
+
+	touch $@
 
 clean:
 	dh_testdir
 	dh_testroot
 
-	-$(MAKE) distclean
 	dh_clean build-stamp install-stamp
 
-install: build install-stamp
-install-stamp:
+	# Add commands to clean up after the build process here
+	[ ! -f Makefile ] || $(MAKE) realclean
+
+install: install-stamp
+install-stamp: build-stamp
 	dh_testdir
 	dh_testroot
 	dh_clean -k
 
-	dh_installdirs -A
+	# Add commands to install the package into debian/$PACKAGE_NAME here
+	$(MAKE) install DESTDIR=$(TMP) PREFIX=/usr
 
-#	$(MAKE) test
-	$(MAKE) pure_install DESTDIR=$(TMP) PREFIX=/usr
-
-	find $(TMP) -name .packlist -exec rm '{}' \;
-	find $(TMP) -depth -type d -empty -exec rmdir '{}' \;
-
-	dh_install --sourcedir=$(TMP) --fail-missing
-
-	touch install-stamp
+	touch $@
 
 binary-arch:
-	# Nothing to do here, yet.
+# We have nothing to do here for an architecture-independent package
+
 binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installexamples
-	dh_installdocs
-	dh_installman
-	dh_installdebconf
-	dh_installinit
-	dh_installchangelogs
-	dh_link
-	dh_strip
+	dh_installdocs TODO
+	dh_installchangelogs CHANGES
+	dh_perl
 	dh_compress
 	dh_fixperms
 	dh_installdeb
-	dh_perl
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
+source diff:
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+.PHONY: build clean binary-indep binary-arch binary
