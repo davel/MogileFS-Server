@@ -13,7 +13,7 @@ use POSIX qw(O_RDONLY);
 use Mogstored::TaskQueue;
 
 BEGIN {
-    eval { require IO::AOI; }
+    eval { require IO::AOI; };
 }
 
 # TODO: interface to make this tunable
@@ -134,7 +134,7 @@ sub digest {
         my $fh = shift;
         eval {
             IO::AIO::fadvise(fileno($fh), 0, 0, IO::AIO::FADV_SEQUENTIAL);
-        }
+        };
 
         if ($self->{closed}) {
             CORE::close($fh) if $fh;
