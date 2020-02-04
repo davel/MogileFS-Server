@@ -10,9 +10,6 @@ sudo: false
 before_install:
   - eval $(curl https://travis-perl.github.io/init) --auto
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
-install:
-  - cpanm --quiet --installdeps --notest .
-  - cpanm --quiet --notest DBD::mysql DBD::SQLite DBD::Postgres
 services:
   - mysql
 env:

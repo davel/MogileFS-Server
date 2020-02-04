@@ -37,6 +37,9 @@ WriteMakefile(
     },
     TEST_REQUIRES => {
         'MogileFS::Utils' => 0,
+        'DBD::Pg'         => 0,
+        'DBD::mysql'      => 0,
+        'DBD::SQLite'     => 0,
     },
     META_MERGE              => {
         no_index => {
