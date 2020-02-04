@@ -202,7 +202,23 @@ sub pid { return $_[0]{pid} }
 sub DESTROY {
     my $self = shift;
     return unless $self->{pid};
-    kill 15, $self->{pid};
+
+    kill(15, $self->{pid}) or warn "Child has gone!";
+
+    my @sig = (2, 15, 15);
+
+    local $SIG{ALRM} = sub {
+        my $next_sig = pop(@sig) || 9;
+        warn "Need to next a signal $next_sig";
+        kill($next_sig) or warn "Child has gone, or just departing";
+    };
+
+    while (1) {
+        alarm(1);
+        last if waitpid($self->{pid}, 0)>0;
+    }
+    alarm(0);
+    return;
 }
 
 
