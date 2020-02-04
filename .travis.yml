@@ -4,7 +4,6 @@ perl:
   - "5.10"
   - "5.20"
   - "5.30"
-  - "latest"
   - "dev"
   - "blead"
 sudo: false
