@@ -35,6 +35,9 @@ WriteMakefile(
         DBI                => 0,
         'Test::More'        => 0.88,    # 0.88 for done_testing() support
     },
+    TEST_REQUIRES => {
+        'MogileFS::Utils' => 0,
+    },
     META_MERGE              => {
         no_index => {
             package   => ['ProcessHandle', 'TrackerHandle', 'MogstoredHandle',
