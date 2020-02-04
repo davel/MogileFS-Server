@@ -9,6 +9,8 @@ perl:
 sudo: false
 before_install:
   - eval $(curl https://travis-perl.github.io/init) --auto
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - psql -c 'CREATE DATABASE test;' -U postgres
 services:
   - mysql
   - postgresql
