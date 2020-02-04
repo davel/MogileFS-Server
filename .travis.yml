@@ -7,9 +7,20 @@ perl:
   - "dev"
   - "blead"
 before_install:
-  - eval $(curl https://travis-perl.github.io/init) --auto
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init
+  - build-perl
+  - perl -V
+  - build-dist
+  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
   - psql -c 'CREATE DATABASE test;' -U postgres
+install:
+  - cpan-install --deps       # installs prereqs, including recommends
+before_script:
+  - coverage-setup
+script:
+  - prove -v -l $(test-files)   # parallel testing
 services:
   - mysql
   - postgresql
