@@ -1,0 +1,20 @@
+language: perl
+perl:
+  - "5.8"
+  - "5.10"
+  - "5.20"
+  - "5.30"
+  - "latest"
+  - "dev"
+  - "blead"
+sudo: false
+before_install:
+  - eval $(curl https://travis-perl.github.io/init) --auto
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+install:
+  - cpanm --quiet --installdeps --notest .
+  - cpanm --quiet --notest DBD::mysql
+services:
+  - mysql
+env:
+  - MOGTEST_DBHOST=127.0.0.1 MOGTEST_DBUSER=root MOGTEST_DBPASS= MOGTEST_DBNAME=test
