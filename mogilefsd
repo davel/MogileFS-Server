@@ -11,6 +11,7 @@ use strict;
 use warnings;
 use lib 'lib';
 use MogileFS::Server;
+use Carp::Always;
 
 # Rename binary in process list to make init scripts saner
 $0 = "mogilefsd";
