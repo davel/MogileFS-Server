@@ -22,10 +22,10 @@ WriteMakefile(
     ABSTRACT_FROM           => 'lib/MogileFS/Server.pm',
     EXE_FILES               => $exefiles,
     PREREQ_PM               => {
-        'Danga::Socket'    => '1.56',
+        'Danga::Socket'    => '1.62',
         'Perlbal'          => '1.79',
         'Sys::Syslog'      => 0,
-        'Sys::Syscall'     => '0.22',
+        'Sys::Syscall'     => '0.25',
         'Getopt::Long'     => 0,
         'Symbol'           => 0,
         'Net::Netmask'     => 0,
