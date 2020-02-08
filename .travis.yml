@@ -17,10 +17,11 @@ before_install:
   - psql -c 'CREATE DATABASE test;' -U postgres
 install:
   - cpan-install --deps       # installs prereqs, including recommends
+  - cpanm Carp::Always
 before_script:
   - coverage-setup
 script:
-  - prove -v -l $(test-files)   # parallel testing
+  - prove -MCarp::Always -v -l $(test-files)   # parallel testing
 services:
   - mysql
   - postgresql
